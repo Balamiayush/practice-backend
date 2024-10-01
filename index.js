@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/create", (req, res) => {
-  const title = req.body.title.split(' ').join(''); // Remove spaces in title
+  const title = req.body.title.split(" ").join(""); // Remove spaces in title
   const details = req.body.details;
 
   // Sanitize the filename to avoid problematic characters
@@ -33,6 +33,16 @@ app.post("/create", (req, res) => {
       return res.status(500).send("Error creating file");
     }
     res.redirect("/");
+  });
+});
+
+app.get("/files/:filename", (req, res) => {
+  fs.readFile(`./files/${req.params.filename}`, "utf-8", (err, filedata) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return res.status(500).send("Error reading file");
+    }
+    res.render("show", { filename: req.params.filename, filedata: filedata });
   });
 });
 
