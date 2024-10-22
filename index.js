@@ -18,7 +18,9 @@ app.get("/", (req, res) => {
     res.render("index", { files: files });
   });
 });
-
+app.get('/edit/:filename',function(req,res){
+  res.render('edit')
+})
 app.post("/create", (req, res) => {
   const title = req.body.title.split(" ").join(""); // Remove spaces in title
   const details = req.body.details;
